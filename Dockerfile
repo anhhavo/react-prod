@@ -12,4 +12,5 @@ RUN npm install bootstrap
 # add app
 COPY . ./
 # start app
+EXPOSE 80
 CMD ["npm", "start"]
