@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: react-deployment
+  labels:
+    app: react-d
+spec:
+  replicas: 3 #create 3 pods 
+  selector:
+    matchLabels:
+      app: react-d
+  template:
+    metadata:
+      labels:
+        app: react-d
+    spec:
+      containers:
+      - name: react-d
+        image: anhhavo/react-test:latest
+        ports:
+        - name: health-port
+          containerPort: 3000
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 3000
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 3000
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        env:
+          - name: PYTHONUNBUFFERED
+            value: "1"
